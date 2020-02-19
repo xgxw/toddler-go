@@ -1,0 +1,22 @@
+syntax = "proto3";
+package xgxw.demo;
+
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+
+option go_package = "pb";
+
+service DemoService{
+  rpc Check(CheckRequest) returns (CheckResponse);
+};
+
+message CheckRequest{
+  uint64 id = 1 [(validator.field) = {int_gt: 0, human_error: "id required"}];
+  string name = 2 [(validator.field) = {string_not_empty:true}];
+  uint64 amount = 3;
+}
+
+message CheckResponse{
+  bool ok = 1;
+  uint64 limit = 2;
+  string msg = 3;
+}

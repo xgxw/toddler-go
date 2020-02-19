@@ -1,0 +1,102 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "toddler",
+    "version": "0.0.1",
+    "title": "toddler",
+    "contact": {
+      "email": "zhensheng.five@google.com"
+    }
+  },
+  "host": "127.0.0.1",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "Demo",
+      "description": "Demo API",
+      "externalDocs": {
+        "description": "",
+        "url": "http://github.com/xgxw/"
+      }
+    }
+  ],
+  "schemes": [
+    "grpc"
+  ],
+  "paths": {
+    "/check": {
+      "get": {
+        "tags": [
+          "Demo"
+        ],
+        "summary": "Check something",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/CheckResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CheckResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "description": "",
+          "type": "boolean",
+          "example": "true"
+        },
+        "limit": {
+          "description": "",
+          "type": "integer",
+          "format": "int",
+          "example": "1000"
+        },
+        "msg": {
+          "description": "解释",
+          "type": "string",
+          "format": "string",
+          "example": ""
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "详情",
+    "url": "https://github.com/xgxw/"
+  }
+}
