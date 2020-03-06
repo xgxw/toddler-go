@@ -27,7 +27,7 @@ var demoGRPCCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		opts, err := loadOptions()
 		handleInitError("load_options", err)
-		boot := bootstrap(opts)
+		boot := newBootstrap(opts)
 
 		lis, err := net.Listen("tcp", fmt.Sprintf(":%d", opts.Demo.Port))
 		handleInitError("grpc_listen", err)

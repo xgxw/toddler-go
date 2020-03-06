@@ -61,6 +61,7 @@ type (
 		Logging log.Options      `mapstructure:"logger"`
 		DB      database.Options `mapstructure:"db" yaml:"db"`
 		Demo    DemoOption       `mapstructure:"demo" yaml:"demo"`
+		Server  ServerOption     `mapstructure:"server" yaml:"server"`
 	}
 )
 

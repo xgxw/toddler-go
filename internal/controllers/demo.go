@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"context"
+	"net/http"
 
+	"github.com/labstack/echo"
 	flog "github.com/xgxw/foundation-go/log"
 	"github.com/xgxw/toddler-go"
 	"github.com/xgxw/toddler-go/internal/codes"
@@ -41,4 +43,8 @@ func (demoCtl *DemoController) Check(ctx context.Context,
 		Limit: checkResult.Limit,
 		Msg:   checkResult.Message,
 	}, nil
+}
+
+func (demoCtl *DemoController) CheckHTTP(ctx echo.Context) (err error) {
+	return ctx.String(http.StatusOK, "this is controller")
 }

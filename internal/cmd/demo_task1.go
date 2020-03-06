@@ -13,7 +13,8 @@ var demoTaskCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		opts, err := loadOptions()
 		handleInitError("load_options", err)
-		boot := bootstrap(opts)
+		boot := newBootstrap(opts)
+
 		f := boot.RuleFactory
 		for _, name := range f.GetAllRuleNames() {
 			rule, _ := f.Get(name)

@@ -19,7 +19,7 @@ type Bootstrap struct {
 }
 
 // bootstrap 用于注入依赖
-func bootstrap(opts *Options) *Bootstrap {
+func newBootstrap(opts *Options) *Bootstrap {
 	var boot *Bootstrap
 	logger := flog.NewLogger(opts.Logging, os.Stdout)
 
