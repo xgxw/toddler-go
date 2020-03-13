@@ -4,6 +4,8 @@
 
 `db.go` 实现了数据库连接的mock和 `foundation-go/database.DB` 的模拟.
 
+具体的使用示例参考 [使用示例](/internal/helpers/demo_test.go)
+
 常用命令
 ```Bash
 # 执行特定的单元测试.
