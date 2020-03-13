@@ -34,6 +34,8 @@ controllers/middlewares/services 如其名字, 定义控制器/中间件/服务.
 
 如果有只允许本项目访问的结构体, 应当定义到 `internal/models` 中.
 
+`internal/tests` 定义了一些单元测试使用的工具
+
 此外, 项目实现了一些其他常用功能
 1. 常用方法, 即一些常用的方法示例, 如读写文件.
   - 参考 `utils`

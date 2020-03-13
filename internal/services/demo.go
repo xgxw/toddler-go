@@ -11,8 +11,8 @@ type DemoService struct {
 	allRules    []rules.IRule
 }
 
-func NewDemoService(ruleFactory *rules.Factory) *DemoService {
-
+// 注意, 这里要返回外层的Service
+func NewDemoService(ruleFactory *rules.Factory) toddler.DemoService {
 	allRuleNames := ruleFactory.GetAllRuleNames()
 	allRules := make([]rules.IRule, len(allRuleNames))
 	for i, name := range allRuleNames {
