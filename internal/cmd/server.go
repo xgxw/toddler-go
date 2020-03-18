@@ -39,7 +39,8 @@ var serverCmd = &cobra.Command{
 		v1 := e.Group("/v1")
 
 		{
-			v1.GET("/check", demoCtl.CheckHTTP)
+			demo := v1.Group("demo")
+			demo.GET("/", demoCtl.DoSomethingHttp)
 		}
 
 		quit := make(chan os.Signal, 1)

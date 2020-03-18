@@ -54,13 +54,10 @@ func initConfig() {
 }
 
 type (
-	IpdbOptions struct {
-		Path string `yaml:"path" mapstructure:"path"`
-	}
 	Options struct {
 		Logging log.Options      `mapstructure:"logger"`
 		DB      database.Options `mapstructure:"db" yaml:"db"`
-		Demo    DemoOption       `mapstructure:"demo" yaml:"demo"`
+		Grpc    GrpcOption       `mapstructure:"grpc" yaml:"grpc"`
 		Server  ServerOption     `mapstructure:"server" yaml:"server"`
 	}
 )

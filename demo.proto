@@ -6,17 +6,15 @@ import "github.com/mwitkow/go-proto-validators/validator.proto";
 option go_package = "pb";
 
 service DemoService{
-  rpc Check(CheckRequest) returns (CheckResponse);
+  rpc DoSomething(Request) returns (Response);
 };
 
-message CheckRequest{
+message Request{
   uint64 id = 1 [(validator.field) = {int_gt: 0, human_error: "id required"}];
   string name = 2 [(validator.field) = {string_not_empty:true}];
-  uint64 amount = 3;
 }
 
-message CheckResponse{
+message Response{
   bool ok = 1;
-  uint64 limit = 2;
-  string msg = 3;
+  string msg = 2;
 }

@@ -3,29 +3,32 @@ package toddler
 import "time"
 
 type DemoService interface {
-	Check(params map[string]interface{}) (*Result, error)
+	DoSomething(*Request) (*Response, error)
 }
 
 type (
-	Demo struct {
+	Request struct {
 		ID   int    `gorm:"column:id" json:"id"`
 		Name string `gorm:"column:name" json:"name"`
-
-		CreatedAt time.Time  `gorm:"column:created_at" json:"-"`
-		UpdatedAt time.Time  `gorm:"column:updated_at" json:"-"`
-		DeletedAt *time.Time `gorm:"column:deleted_at" json:"-"`
 	}
-	Result struct {
-		OK      bool   `gorm:"column:ok" json:"ok"`
-		Limit   uint64 `gorm:"column:limit" json:"limit"`
-		Message string `gorm:"column:message" json:"message"`
+	Response struct {
+		OK  bool   `gorm:"column:ok" json:"ok"`
+		Msg string `gorm:"column:msg" json:"msg"`
 	}
 )
 
-func (Demo) TableName() string {
-	return "demos"
+// DemoStruct 结构体定义示例, gorm 会自动设置 CreatedAt/UpdatedAt/DeletedAt
+type DemoStruct struct {
+	ID   int    `gorm:"column:id" json:"id"`
+	Name string `gorm:"column:name" json:"name"`
+
+	CreatedAt time.Time  `gorm:"column:created_at" json:"-"`
+	UpdatedAt time.Time  `gorm:"column:updated_at" json:"-"`
+	DeletedAt *time.Time `gorm:"column:deleted_at" json:"-"`
 }
 
-func GetDemoKey() string {
-	return "toddler:demo_print"
+// TableName gorm 规范, 需要添加 TableName 以便gorm获取表名.
+// 规范为 "业务名+s", 连字符模式. 如 user=> users.
+func (DemoStruct) TableName() string {
+	return "demo_structs"
 }

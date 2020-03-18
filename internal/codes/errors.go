@@ -2,9 +2,6 @@ package codes
 
 import "fmt"
 
-// DBRecordNotFoundError 未找到数据
-var DBRecordNotFoundError = &Error{Code: NotFound, Msg: "未找到数据 in db"}
-
 // BadRequestError 未找到数据
 var BadRequestError = &Error{Code: BadRequest, Msg: "请求不合法, 请检查参数"}
 

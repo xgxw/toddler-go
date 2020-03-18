@@ -25,110 +25,94 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type CheckRequest struct {
+type Request struct {
 	Id                   uint64   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Amount               uint64   `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CheckRequest) Reset()         { *m = CheckRequest{} }
-func (m *CheckRequest) String() string { return proto.CompactTextString(m) }
-func (*CheckRequest) ProtoMessage()    {}
-func (*CheckRequest) Descriptor() ([]byte, []int) {
+func (m *Request) Reset()         { *m = Request{} }
+func (m *Request) String() string { return proto.CompactTextString(m) }
+func (*Request) ProtoMessage()    {}
+func (*Request) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ca53982754088a9d, []int{0}
 }
 
-func (m *CheckRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CheckRequest.Unmarshal(m, b)
+func (m *Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Request.Unmarshal(m, b)
 }
-func (m *CheckRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CheckRequest.Marshal(b, m, deterministic)
+func (m *Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Request.Marshal(b, m, deterministic)
 }
-func (m *CheckRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CheckRequest.Merge(m, src)
+func (m *Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Request.Merge(m, src)
 }
-func (m *CheckRequest) XXX_Size() int {
-	return xxx_messageInfo_CheckRequest.Size(m)
+func (m *Request) XXX_Size() int {
+	return xxx_messageInfo_Request.Size(m)
 }
-func (m *CheckRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CheckRequest.DiscardUnknown(m)
+func (m *Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_Request.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_CheckRequest proto.InternalMessageInfo
+var xxx_messageInfo_Request proto.InternalMessageInfo
 
-func (m *CheckRequest) GetId() uint64 {
+func (m *Request) GetId() uint64 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *CheckRequest) GetName() string {
+func (m *Request) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *CheckRequest) GetAmount() uint64 {
-	if m != nil {
-		return m.Amount
-	}
-	return 0
-}
-
-type CheckResponse struct {
+type Response struct {
 	Ok                   bool     `protobuf:"varint,1,opt,name=ok,proto3" json:"ok,omitempty"`
-	Limit                uint64   `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
-	Msg                  string   `protobuf:"bytes,3,opt,name=msg,proto3" json:"msg,omitempty"`
+	Msg                  string   `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CheckResponse) Reset()         { *m = CheckResponse{} }
-func (m *CheckResponse) String() string { return proto.CompactTextString(m) }
-func (*CheckResponse) ProtoMessage()    {}
-func (*CheckResponse) Descriptor() ([]byte, []int) {
+func (m *Response) Reset()         { *m = Response{} }
+func (m *Response) String() string { return proto.CompactTextString(m) }
+func (*Response) ProtoMessage()    {}
+func (*Response) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ca53982754088a9d, []int{1}
 }
 
-func (m *CheckResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CheckResponse.Unmarshal(m, b)
+func (m *Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Response.Unmarshal(m, b)
 }
-func (m *CheckResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CheckResponse.Marshal(b, m, deterministic)
+func (m *Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Response.Marshal(b, m, deterministic)
 }
-func (m *CheckResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CheckResponse.Merge(m, src)
+func (m *Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Response.Merge(m, src)
 }
-func (m *CheckResponse) XXX_Size() int {
-	return xxx_messageInfo_CheckResponse.Size(m)
+func (m *Response) XXX_Size() int {
+	return xxx_messageInfo_Response.Size(m)
 }
-func (m *CheckResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_CheckResponse.DiscardUnknown(m)
+func (m *Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_Response.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_CheckResponse proto.InternalMessageInfo
+var xxx_messageInfo_Response proto.InternalMessageInfo
 
-func (m *CheckResponse) GetOk() bool {
+func (m *Response) GetOk() bool {
 	if m != nil {
 		return m.Ok
 	}
 	return false
 }
 
-func (m *CheckResponse) GetLimit() uint64 {
-	if m != nil {
-		return m.Limit
-	}
-	return 0
-}
-
-func (m *CheckResponse) GetMsg() string {
+func (m *Response) GetMsg() string {
 	if m != nil {
 		return m.Msg
 	}
@@ -136,32 +120,30 @@ func (m *CheckResponse) GetMsg() string {
 }
 
 func init() {
-	proto.RegisterType((*CheckRequest)(nil), "xgxw.demo.CheckRequest")
-	proto.RegisterType((*CheckResponse)(nil), "xgxw.demo.CheckResponse")
+	proto.RegisterType((*Request)(nil), "xgxw.demo.Request")
+	proto.RegisterType((*Response)(nil), "xgxw.demo.Response")
 }
 
 func init() { proto.RegisterFile("demo.proto", fileDescriptor_ca53982754088a9d) }
 
 var fileDescriptor_ca53982754088a9d = []byte{
-	// 273 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x64, 0x90, 0xcf, 0x4b, 0xc3, 0x30,
-	0x1c, 0xc5, 0x6d, 0xd6, 0x15, 0xfb, 0x9d, 0x3f, 0x46, 0x14, 0x2d, 0xbd, 0xac, 0xcc, 0xcb, 0x10,
-	0xd6, 0x82, 0x82, 0x07, 0x8f, 0x55, 0x10, 0xaf, 0xf1, 0x22, 0xde, 0xda, 0x26, 0x74, 0xa1, 0x4b,
-	0xbf, 0x5d, 0x9b, 0xae, 0xfb, 0x6f, 0x07, 0xfb, 0x4b, 0xa4, 0xe9, 0x18, 0x82, 0xb7, 0xf7, 0x5e,
-	0xc2, 0xe7, 0x25, 0x0f, 0x80, 0x0b, 0x85, 0x61, 0x55, 0xa3, 0x46, 0xea, 0xee, 0xf2, 0x5d, 0x17,
-	0xf6, 0x81, 0xff, 0x92, 0x4b, 0xbd, 0x6a, 0xd3, 0x30, 0x43, 0x15, 0xa9, 0x4e, 0xea, 0x02, 0xbb,
-	0x28, 0xc7, 0xa5, 0xb9, 0xb7, 0xdc, 0x26, 0x6b, 0xc9, 0x13, 0x8d, 0x75, 0x13, 0x9d, 0xe4, 0x80,
-	0x98, 0xe7, 0x70, 0xf1, 0xb6, 0x12, 0x59, 0xc1, 0xc4, 0xa6, 0x15, 0x8d, 0xa6, 0x0f, 0x40, 0x24,
-	0xf7, 0xac, 0xc0, 0x5a, 0xd8, 0xf1, 0xcd, 0x61, 0x3f, 0xbb, 0x9e, 0x9e, 0x3d, 0x4e, 0x24, 0x0f,
-	0x6a, 0xb1, 0x69, 0x65, 0x2d, 0x38, 0x23, 0x92, 0x53, 0x1f, 0xec, 0x32, 0x51, 0xc2, 0x23, 0x81,
-	0xb5, 0x70, 0x63, 0xe7, 0xb0, 0x9f, 0x91, 0x6f, 0x8b, 0x99, 0x8c, 0xde, 0x81, 0x93, 0x28, 0x6c,
-	0x4b, 0xed, 0x8d, 0x7a, 0x08, 0x3b, 0xba, 0xf9, 0x07, 0x5c, 0x1e, 0x8b, 0x9a, 0x0a, 0xcb, 0x46,
-	0xd0, 0x2b, 0x20, 0x58, 0x98, 0xa6, 0x73, 0x46, 0xb0, 0xa0, 0xb7, 0x30, 0x5e, 0x4b, 0x25, 0xb5,
-	0xa1, 0xda, 0x6c, 0x30, 0x74, 0x0a, 0x23, 0xd5, 0xe4, 0x86, 0xe5, 0xb2, 0x5e, 0x3e, 0x7d, 0xc2,
-	0xe4, 0x5d, 0x28, 0xfc, 0x12, 0xf5, 0x56, 0x66, 0x82, 0xbe, 0xc2, 0xd8, 0x70, 0xe9, 0x7d, 0x78,
-	0x5a, 0x23, 0xfc, 0xfb, 0x25, 0xdf, 0xfb, 0x7f, 0x30, 0x3c, 0x21, 0xb6, 0x7f, 0x48, 0x95, 0xa6,
-	0x8e, 0x59, 0xe2, 0xf9, 0x37, 0x00, 0x00, 0xff, 0xff, 0xf5, 0x7b, 0x06, 0x9d, 0x5a, 0x01, 0x00,
-	0x00,
+	// 246 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x54, 0x8f, 0xc1, 0x6a, 0xc2, 0x40,
+	0x10, 0x86, 0x9b, 0xad, 0x58, 0x9d, 0x40, 0x2b, 0xeb, 0x45, 0x72, 0x31, 0xd8, 0x8b, 0x94, 0x9a,
+	0x40, 0x0b, 0x3e, 0x40, 0xb0, 0x97, 0x1e, 0xd7, 0x4b, 0xe9, 0x2d, 0x71, 0x87, 0x75, 0x49, 0x37,
+	0x13, 0x77, 0x37, 0xc6, 0xb7, 0x15, 0x7c, 0x92, 0x62, 0x52, 0x84, 0xde, 0x7e, 0x3e, 0x66, 0xfe,
+	0x99, 0x0f, 0x40, 0xa2, 0xa1, 0xa4, 0xb6, 0xe4, 0x89, 0x8f, 0x4f, 0xea, 0xd4, 0x26, 0x57, 0x10,
+	0xad, 0x95, 0xf6, 0xfb, 0xa6, 0x48, 0x76, 0x64, 0x52, 0xd3, 0x6a, 0x5f, 0x52, 0x9b, 0x2a, 0x5a,
+	0x75, 0x73, 0xab, 0x63, 0xfe, 0xa3, 0x65, 0xee, 0xc9, 0xba, 0xf4, 0x16, 0xfb, 0x8a, 0xc5, 0x27,
+	0x3c, 0x08, 0x3c, 0x34, 0xe8, 0x3c, 0x7f, 0x06, 0xa6, 0xe5, 0x2c, 0x88, 0x83, 0xe5, 0x20, 0x9b,
+	0x5e, 0xce, 0xf3, 0xa7, 0xc9, 0xdd, 0x4b, 0xa8, 0x65, 0x6c, 0xf1, 0xd0, 0x68, 0x8b, 0x52, 0x30,
+	0x2d, 0x79, 0x04, 0x83, 0x2a, 0x37, 0x38, 0x63, 0x71, 0xb0, 0x1c, 0x67, 0xc3, 0xcb, 0x79, 0xce,
+	0xbe, 0x02, 0xd1, 0xb1, 0xc5, 0x2b, 0x8c, 0x04, 0xba, 0x9a, 0x2a, 0x87, 0xfc, 0x11, 0x18, 0x95,
+	0x5d, 0xd9, 0x48, 0x30, 0x2a, 0xf9, 0x04, 0xee, 0x8d, 0x53, 0xfd, 0x9a, 0xb8, 0xc6, 0xb7, 0x0f,
+	0x08, 0x37, 0x68, 0x68, 0x8b, 0xf6, 0xa8, 0x77, 0xc8, 0xd7, 0x10, 0x6e, 0x68, 0x4b, 0x06, 0xfd,
+	0x5e, 0x57, 0x8a, 0xf3, 0xe4, 0xe6, 0x96, 0xfc, 0x3d, 0x18, 0x4d, 0xff, 0xb1, 0xfe, 0x50, 0x36,
+	0xf8, 0x66, 0x75, 0x51, 0x0c, 0x3b, 0x9b, 0xf7, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa8, 0xc1,
+	0x30, 0x98, 0x1e, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -176,7 +158,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type DemoServiceClient interface {
-	Check(ctx context.Context, in *CheckRequest, opts ...grpc.CallOption) (*CheckResponse, error)
+	DoSomething(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
 type demoServiceClient struct {
@@ -187,9 +169,9 @@ func NewDemoServiceClient(cc *grpc.ClientConn) DemoServiceClient {
 	return &demoServiceClient{cc}
 }
 
-func (c *demoServiceClient) Check(ctx context.Context, in *CheckRequest, opts ...grpc.CallOption) (*CheckResponse, error) {
-	out := new(CheckResponse)
-	err := c.cc.Invoke(ctx, "/xgxw.demo.DemoService/Check", in, out, opts...)
+func (c *demoServiceClient) DoSomething(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, "/xgxw.demo.DemoService/DoSomething", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -198,35 +180,35 @@ func (c *demoServiceClient) Check(ctx context.Context, in *CheckRequest, opts ..
 
 // DemoServiceServer is the server API for DemoService service.
 type DemoServiceServer interface {
-	Check(context.Context, *CheckRequest) (*CheckResponse, error)
+	DoSomething(context.Context, *Request) (*Response, error)
 }
 
 // UnimplementedDemoServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedDemoServiceServer struct {
 }
 
-func (*UnimplementedDemoServiceServer) Check(ctx context.Context, req *CheckRequest) (*CheckResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
+func (*UnimplementedDemoServiceServer) DoSomething(ctx context.Context, req *Request) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DoSomething not implemented")
 }
 
 func RegisterDemoServiceServer(s *grpc.Server, srv DemoServiceServer) {
 	s.RegisterService(&_DemoService_serviceDesc, srv)
 }
 
-func _DemoService_Check_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckRequest)
+func _DemoService_DoSomething_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DemoServiceServer).Check(ctx, in)
+		return srv.(DemoServiceServer).DoSomething(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/xgxw.demo.DemoService/Check",
+		FullMethod: "/xgxw.demo.DemoService/DoSomething",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DemoServiceServer).Check(ctx, req.(*CheckRequest))
+		return srv.(DemoServiceServer).DoSomething(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -236,8 +218,8 @@ var _DemoService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*DemoServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Check",
-			Handler:    _DemoService_Check_Handler,
+			MethodName: "DoSomething",
+			Handler:    _DemoService_DoSomething_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

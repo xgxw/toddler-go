@@ -1,56 +1,21 @@
 package services
 
 import (
-	"github.com/pkg/errors"
 	"github.com/xgxw/toddler-go"
-	"github.com/xgxw/toddler-go/internal/rules"
 )
 
-type DemoService struct {
-	ruleFactory *rules.Factory
-	allRules    []rules.IRule
-}
+// DemoService 被确立为基础服务, 被其他服务调用, 后续改动要慎重操作
+
+type DemoService struct{}
 
 // 注意, 这里要返回外层的Service
-func NewDemoService(ruleFactory *rules.Factory) toddler.DemoService {
-	allRuleNames := ruleFactory.GetAllRuleNames()
-	allRules := make([]rules.IRule, len(allRuleNames))
-	for i, name := range allRuleNames {
-		allRules[i], _ = ruleFactory.Get(name)
-	}
-
-	return &DemoService{
-		ruleFactory: ruleFactory,
-		allRules:    allRules,
-	}
+func NewDemoService() toddler.DemoService {
+	return &DemoService{}
 }
 
 var _ toddler.DemoService = new(DemoService)
 
-func (d *DemoService) Check(params map[string]interface{}) (
-	result *toddler.Result, err error) {
-
-	result = &toddler.Result{
-		OK:    true,
-		Limit: 1 << 63,
-	}
-
-	var checkResult *toddler.Result
-	for _, rule := range d.allRules {
-		checkResult, err = rule.Check(params)
-		if err != nil {
-			return checkResult, err
-		}
-		if checkResult == nil {
-			return result, errors.Errorf("rule check return nil")
-		}
-		if !checkResult.OK {
-			return checkResult, nil
-		}
-		if checkResult.Limit < result.Limit {
-			result.Limit = checkResult.Limit
-			result.Message = checkResult.Message
-		}
-	}
-	return result, nil
+// Create 创建数据库记录示例
+func (dSvc *DemoService) DoSomething(request *toddler.Request) (*toddler.Response, error) {
+	return &toddler.Response{}, nil
 }

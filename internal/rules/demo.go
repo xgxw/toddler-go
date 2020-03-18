@@ -10,11 +10,11 @@ import (
 const DemoLimit = uint64(30000)
 
 var (
-	DemoCheckSuccess = &toddler.Result{
+	DemoCheckSuccess = &toddler.CheckResult{
 		OK:    true,
 		Limit: DemoLimit,
 	}
-	DemoCheckFail = &toddler.Result{
+	DemoCheckFail = &toddler.CheckResult{
 		OK:      false,
 		Limit:   DemoLimit,
 		Message: "xxxx",
@@ -33,7 +33,7 @@ type DemoCheckRequest struct {
 	Amount uint64 `gorm:"column:amount" json:"amount"`
 }
 
-func (d *DemoRule) Check(params map[string]interface{}) (*toddler.Result, error) {
+func (d *DemoRule) Check(params map[string]interface{}) (*toddler.CheckResult, error) {
 	_, err := d.parseCheckParams(params)
 	if err != nil {
 		return DemoCheckFail, err

@@ -18,9 +18,7 @@ func MockDB(t *testing.T) (*database.DB, sqlmock.Sqlmock, func()) {
 	if err != nil {
 		t.Fatalf("failed to connect to testing db: %s", err)
 	}
-	if debug {
-		gormDB = gormDB.Debug()
-	}
+	gormDB = gormDB.Debug()
 	db = &database.DB{
 		DB: gormDB,
 	}

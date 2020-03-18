@@ -19,6 +19,7 @@ var allRuleCreators = make(map[string]IRuleCreator, 0)
 
 // Resource 统一资源管理, 存储所有 rule 需要的资源.
 // factory 将 Resource 传入 creator, creator 取其中资源, 交于NewXXRule.
+// 一般而言, 包括 db,cache 等. 此处为了简洁, 暂时略去.
 type Resource struct{}
 
 // IRuleCreator 为工厂提供统一的创建方法

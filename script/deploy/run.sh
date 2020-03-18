@@ -1,4 +1,5 @@
 #!/bin/bash
+# 部署脚本, 实现通过接收信号然后停止程序
 
 _term() {
 echo "Caught SIGTERM signal!"

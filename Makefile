@@ -75,6 +75,10 @@ proto:
  		demo.proto
 	$(call color_out,$(CL_ORANGE),"Done")
 
+mock:
+	# go get github.com/golang/mock/gomock
+	@mockgen -package=mocks -source=demo.go -destination internal/tests/mocks/demo.go
+
 .PHONY: all
 all:
 	build

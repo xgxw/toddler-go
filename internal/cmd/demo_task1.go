@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
+	"github.com/xgxw/toddler-go/internal/rules"
 )
 
 var demoTaskCmd = &cobra.Command{
@@ -11,13 +12,14 @@ var demoTaskCmd = &cobra.Command{
 	Short: "demo task",
 	Long:  `demo task, 定时任务`,
 	Run: func(cmd *cobra.Command, args []string) {
-		opts, err := loadOptions()
-		handleInitError("load_options", err)
-		boot := newBootstrap(opts)
+		var err error
+		//opts, err := loadOptions()
+		//handleInitError("load_options", err)
+		resource := &rules.Resource{}
+		ruleFactory := rules.NewFactory(resource)
 
-		f := boot.RuleFactory
-		for _, name := range f.GetAllRuleNames() {
-			rule, _ := f.Get(name)
+		for _, name := range ruleFactory.GetAllRuleNames() {
+			rule, _ := ruleFactory.Get(name)
 			err = rule.MakeEffective()
 			if err != nil {
 				log.Fatalf("error in exec rule make effective. error: %v", err)

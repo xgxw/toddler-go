@@ -20,7 +20,7 @@ import (
 	"google.golang.org/grpc/keepalive"
 )
 
-var demoGRPCCmd = &cobra.Command{
+var grpcCmd = &cobra.Command{
 	Use:   "demo",
 	Short: "demo",
 	Long:  `demo`,
@@ -29,7 +29,7 @@ var demoGRPCCmd = &cobra.Command{
 		handleInitError("load_options", err)
 		boot := newBootstrap(opts)
 
-		lis, err := net.Listen("tcp", fmt.Sprintf(":%d", opts.Demo.Port))
+		lis, err := net.Listen("tcp", fmt.Sprintf(":%d", opts.Grpc.Port))
 		handleInitError("grpc_listen", err)
 
 		demoCtl := controllers.NewDemoController(boot.Logger, boot.DemoSvc)
@@ -56,7 +56,7 @@ var demoGRPCCmd = &cobra.Command{
 
 		quit := make(chan os.Signal, 1)
 		go func() {
-			boot.Logger.Infof("grpc server start at port %d...", opts.Demo.Port)
+			boot.Logger.Infof("grpc server start at port %d...", opts.Grpc.Port)
 			err = gs.Serve(lis)
 			if err != nil {
 				boot.Logger.Fatalf("start server error, error is %v ", err)
@@ -70,10 +70,10 @@ var demoGRPCCmd = &cobra.Command{
 	},
 }
 
-type DemoOption struct {
+type GrpcOption struct {
 	Port int `mapstructure:"port" yaml:"port"`
 }
 
 func init() {
-	rootCmd.AddCommand(demoGRPCCmd)
+	rootCmd.AddCommand(grpcCmd)
 }

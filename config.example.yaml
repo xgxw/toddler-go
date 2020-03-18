@@ -13,5 +13,5 @@ cache:
   password: ""
   pool_size: 1
 
-demo:
+grpc:
   port: 8000

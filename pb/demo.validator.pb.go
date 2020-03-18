@@ -16,7 +16,7 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-func (this *CheckRequest) Validate() error {
+func (this *Request) Validate() error {
 	if !(this.Id > 0) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Id", fmt.Errorf(`id required`))
 	}
@@ -25,6 +25,6 @@ func (this *CheckRequest) Validate() error {
 	}
 	return nil
 }
-func (this *CheckResponse) Validate() error {
+func (this *Response) Validate() error {
 	return nil
 }
