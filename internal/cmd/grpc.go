@@ -32,9 +32,9 @@ var grpcCmd = &cobra.Command{
 		lis, err := net.Listen("tcp", fmt.Sprintf(":%d", opts.Grpc.Port))
 		handleInitError("grpc_listen", err)
 
-		demoCtl := controllers.NewDemoController(boot.Logger, boot.DemoSvc)
+		demoCtl := controllers.NewDemoController(boot.GetLogger(), boot.GetDemoSvc())
 
-		logger := boot.Logger.WithField("scope", "demo")
+		logger := boot.GetLogger().WithField("scope", "demo")
 		gs := grpc.NewServer(
 			grpc.KeepaliveParams(keepalive.ServerParameters{
 				Time: 5 * time.Second,
@@ -56,10 +56,10 @@ var grpcCmd = &cobra.Command{
 
 		quit := make(chan os.Signal, 1)
 		go func() {
-			boot.Logger.Infof("grpc server start at port %d...", opts.Grpc.Port)
+			logger.Infof("grpc server start at port %d...", opts.Grpc.Port)
 			err = gs.Serve(lis)
 			if err != nil {
-				boot.Logger.Fatalf("start server error, error is %v ", err)
+				logger.Fatalf("start server error, error is %v ", err)
 				quit <- os.Interrupt
 			}
 		}()

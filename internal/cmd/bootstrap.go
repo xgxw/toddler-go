@@ -11,26 +11,39 @@ import (
 )
 
 type Bootstrap struct {
-	Logger  *flog.Logger
-	DB      *database.DB
-	DemoSvc toddler.DemoService
+	opts    *Options
+	logger  *flog.Logger
+	db      *database.DB
+	demoSvc toddler.DemoService
 }
 
 func newBootstrap(opts *Options) *Bootstrap {
-	var boot *Bootstrap
-	logger := flog.NewLogger(opts.Logging, os.Stdout)
-
-	db, err := database.NewDatabase(opts.DB)
-	handleInitError("connect database", err)
-
-	demoSvc := services.NewDemoService()
-
-	boot = &Bootstrap{
-		Logger:  logger,
-		DB:      db,
-		DemoSvc: demoSvc,
+	return &Bootstrap{
+		opts: opts,
 	}
-	return boot
+}
+
+func (b *Bootstrap) GetLogger() *flog.Logger {
+	if b.logger == nil {
+		b.logger = flog.NewLogger(b.opts.Logging, os.Stdout)
+	}
+	return b.logger
+}
+
+func (b *Bootstrap) GetDB() *database.DB {
+	if b.db == nil {
+		db, err := database.NewDatabase(b.opts.DB)
+		handleInitError("connect database", err)
+		b.db = db
+	}
+	return b.db
+}
+
+func (b *Bootstrap) GetDemoSvc() toddler.DemoService {
+	if b.demoSvc == nil {
+		b.demoSvc = services.NewDemoService()
+	}
+	return b.demoSvc
 }
 
 func handleInitError(module string, err error) {

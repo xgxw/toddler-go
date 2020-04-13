@@ -23,7 +23,8 @@ var serverCmd = &cobra.Command{
 
 		boot := newBootstrap(opts)
 
-		demoCtl := controllers.NewDemoController(boot.Logger, boot.DemoSvc)
+		logger := boot.GetLogger()
+		demoCtl := controllers.NewDemoController(logger, boot.GetDemoSvc())
 
 		e := echo.New()
 		e.Use(middleware.Logger())
@@ -49,7 +50,7 @@ var serverCmd = &cobra.Command{
 			address := fmt.Sprintf("%s:%d", opts.Server.Host, opts.Server.Port)
 			err = e.Start(address)
 			if err != nil {
-				boot.Logger.Fatal("start echo error, error is ", err)
+				logger.Fatal("start echo error, error is ", err)
 				quit <- os.Interrupt
 			}
 		}()
