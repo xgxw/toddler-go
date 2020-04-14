@@ -28,6 +28,7 @@ var grpcCmd = &cobra.Command{
 		opts, err := loadOptions()
 		handleInitError("load_options", err)
 		boot := newBootstrap(opts)
+		defer boot.Teardown()
 
 		lis, err := net.Listen("tcp", fmt.Sprintf(":%d", opts.Grpc.Port))
 		handleInitError("grpc_listen", err)

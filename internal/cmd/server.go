@@ -22,6 +22,7 @@ var serverCmd = &cobra.Command{
 		opts, err := loadOptions()
 
 		boot := newBootstrap(opts)
+		defer boot.Teardown()
 
 		logger := boot.GetLogger()
 		demoCtl := controllers.NewDemoController(logger, boot.GetDemoSvc())
