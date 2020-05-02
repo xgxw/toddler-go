@@ -21,7 +21,7 @@
     }
   ],
   "schemes": [
-    "grpc"
+    "https"
   ],
   "paths": {
     "/check": {
