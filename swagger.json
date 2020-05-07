@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
+    "title": "toddler",
     "description": "toddler",
     "version": "0.0.1",
-    "title": "toddler",
     "contact": {
       "email": "zhensheng.five@google.com"
     }
@@ -16,7 +16,7 @@
       "description": "Demo API",
       "externalDocs": {
         "description": "",
-        "url": "http://github.com/xgxw/"
+        "url": "http://github.com/xgxw/toddler-go"
       }
     }
   ],

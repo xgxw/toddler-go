@@ -2,6 +2,8 @@ package toddler
 
 import "time"
 
+// 使用 interface 的好处参考 link:/docs/services.adoc
+
 type DemoService interface {
 	DoSomething(*Request) (*Response, error)
 }
