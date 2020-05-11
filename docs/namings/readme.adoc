@@ -2,6 +2,8 @@
 
 https://www.cnblogs.com/FlyAway2013/p/10166359.html[DO/BO/DTO/VO/AO/PO]
 
+https://unbug.github.io/codelf[codelf 命名搜索神器]
+
 .分层领域模型规约：
 . DO（ Data Object）：与数据库表结构一一对应，通过DAO层向上传输数据源对象。
 . DTO（ Data Transfer Object）：数据传输对象，Service或Manager向外传输的对象。
