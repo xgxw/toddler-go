@@ -4,6 +4,12 @@ https://www.cnblogs.com/FlyAway2013/p/10166359.html[DO/BO/DTO/VO/AO/PO]
 
 https://unbug.github.io/codelf[codelf 命名搜索神器]
 
+切记, 要因地制宜, 实事求是, 根据当前情况判断如何使用, 而不陷入模式.
+
+各种分层模型/命名规范 给出了很好的建议, 但并不一定适合所有状况.
+
+~~~
+
 .分层领域模型规约：
 . DO（ Data Object）：与数据库表结构一一对应，通过DAO层向上传输数据源对象。
 . DTO（ Data Transfer Object）：数据传输对象，Service或Manager向外传输的对象。
@@ -18,3 +24,31 @@ https://unbug.github.io/codelf[codelf 命名搜索神器]
 . 数据传输对象：xxxDTO，xxx为业务领域相关的名称。
 . 展示对象：xxxVO，xxx一般为网页名称。
 . POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO。
+
+~~~
+
+个人认为, 定义各种不同类型的结构体是为了实现更好的解耦的, 
+从而实现当内部/外部需求变化时, 程序重构需要更小的代价.
+
+一个项目至少要定义 VO 对象: XXView. 
+用于Controller对外返回, 而不是直接使用数据库结构或者内部结构.
+
+View对象强烈推荐使用. 因为需求变化后, 很难再改别的项目(调用本项目的项目)
+的代码, 使用View可以更好的解耦.
+
+~~~
+
+一个Service领域, 一般至少要有如下三个类
+
+. DTO 对象: XXTransfer. 该服务对外展示的对象
+. DO 对象. XX 或 XXDO. 与数据库表结构对应, 用于存储.
+. CreateXXRequest. 创建该数据需要的字段.
+
+DTO 有两种定义时机.
+
+. 开始开发时就定义. 
+. 开始开发时不定义, 当出现需要 DTO 的需求时, 重构代码, 添加DTO.
+
+一般推荐第一种方式. 我认为是利大于弊的. 除非程序比较简单/独立, 
+或者程序不需要这种分层, 或者其他合适的情况.
+
