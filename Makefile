@@ -77,7 +77,13 @@ proto:
 
 mock:
 	# go get github.com/golang/mock/gomock
-	@mockgen -package=mocks -source=demo.go -destination internal/tests/mocks/demo.go
+	# Source Mode
+	@mockgen -package=mocks -destination internal/tests/mocks/demo.go -source=demo.go
+	# Reflect Mode. 当 Interface 有 embedded interface 时反射模式好用
+	# @mockgen -package=mocks -destination internal/tests/mocks/demo.go . DemoService
+	# 简化写法
+	# @mockgen -package=mocks -destination internal/tests/mocks/demo.go \
+	#		github.com/xgxw/toddler-go DemoService
 
 .PHONY: all
 all:
