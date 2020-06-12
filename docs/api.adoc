@@ -1,7 +1,0 @@
-= API
-
-api 建议使用 swagger.
-
-示例参考 link:/swagger.json[toddle api-swagger]
-
-swagger api 在线编辑器 link:https://editor.swagger.io[swagger editor online]
