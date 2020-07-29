@@ -1,0 +1,161 @@
+= 分层架构的命名规范
+
+使用分层结构时, 项目中常见的一个问题是, 同一实体在不同层次需要不同的结构体.
+
+以订单为例, Order结构伪代码如下.
+
+[source]
+----
+// Chanel 渠道. 假设 程序内部区分了 订阅号/服务号, 但是外部传入消息无法区分, 只知道是公众号,
+// 如公众号收到的消息/事件, 不包含该公众号的类型信息.
+type Chanel uint32
+
+type OrderDao struct{
+  ...
+  // Chanel 订单渠道
+  Chanel Chanel
+  // Flag 假设字段. 数据库存储的 Flag 字符串
+  FlagStr string  `json:"-"`
+}
+
+// 类型不一致则转义结构体
+type Order struct{
+  // Flag 对外界显示为数组类型
+  Flag []string   `gorm:"-"`
+}
+// dto 直接使用别名
+type OrderDto Order
+
+// 一般而言, 我的代码结构是
+// Order 也是OrderDao
+type Order struct{}
+
+type OrderDto PBOrder
+
+// proto 中定义的order
+type PBOrder struct{}
+----
+
+一般情况下, 我们定义数据表后, 上层结构体直接使用下层结构体的别名即可. 但是, 如下情况需要修改表结构, 
+各层定义自己的结构.
+
+1. 在 dao 层, 结构体对应数据表.
+2. 在 service 层, 结构体可以对应dao层结构(go中,使用gorm时, 两者可以是一样的)
+  * service 层对外传递的结构体为 OrderDto, 负责转义 Flag.
+3. 在 business 暂不讨论, 可与service一致.
+4. controller/proto 层, 需要对于外界提供 ChanelOfficial(公众号), 相当于 订阅号+服务好,
+  所以 proto 层的 渠道枚举值和service不同, 两者自然不能公用结构.
+
+另外, 我建议 .
+
+对于要导出(即对外开放)的结构体, 我推荐每一层都有自己的结构类型, proto 层结构体和dto/service分别定义, 
+而不是 service 直接使用proto层结构体.
+好处是解耦. 当本层更改时, 其他层不需要再变化. 缺点是, pb和service层会有耦合, 且添加了很多至少目前看起来没必要的实体.
+
+在 go/grpc 编程时, 可以参考如下方案
+
+1. dao/dto/pb 每层都要有自己的数据结构, 方便解耦
+
+---
+// 原先认知, 现在已改变. 参考下方内容
+// 暂留是为了整理, 可能用到.
+
+2. dto 可以是 pb 结构体的别名(正常应该是 pb 是 dto 的别名, 但是由于grpc的原因,只好反过来).
+3. 枚举常量的定义, svc可以是 pb的别名, svc中可以添加解释说明的相关map.
+
+
+.注意分层
+1. dao 是数据表的映射. (我一般去掉dao, 如 Order即OrderDao)
+2. dto service 对外展示的数据结构.
+  * 因为 pb 必须定义, 所以一般情况下 dto 可以等同pb(type dto pb)
+  * service 层的枚举常量也可以使用pb中定义的.
+3. bo business 对外展示结构. 一般省略这一层
+4. pb/ctrl 对外返回的结构.
+
+[source;go]
+----
+// proto
+service Demo{
+  Create(CreateRequest)(Demo)
+}
+message Demo{
+  ...
+}
+enum DemoStatus{
+}
+// proto 本身就是定义grpc结构体, rpc即远程服务调用, 定义的结构体本身就是 dto.
+
+// internal/models/demo.go
+// Demo 即 DemoDao, 数据库中的结构
+type Demo struct{
+}
+type DemoStatus pb.Status
+
+// demo.go
+// Demo 即DemoDto, 服务层对外开放的结构体. 一般情况下与 pb.struct 相同, 但是http接口返回的数据可能有加工,
+// 常见的情况是, rpc调用无需加密, http调用需要加密, 如对外hashID.
+// dto 与 dao 一般不同, 如数据库不支持数组, rpc支持数组. rpc不支持时间类型, 数据库支持. 
+// 再比如某些字段不希望对外暴露, 只希望内部使用, 一般分开定义.
+type Demo pb.Demo
+//type DemoStatus pb.Status
+
+// internal/controllers/demo.go
+// Demo 即DemoView. 对外展示时, 需要将某些字段加密, 或者人性化处理(如 WX->微信), 所以也需要一层.
+type Demo struct{
+}
+----
+总之, 两大原则
+1. 尽量解耦, 各自负责各自的事情, 其他层的修改对本层影响可以脱钩.
+2. 对扩展开放, 对修改关闭. 
+
+---
+
+internal 表示项目内部使用的数据结构和接口, 最外层是项目对外开放的数据结构和接口.
+
+.对外开放的原则
+1. 外界使用的结构体和接口.
+  * 如 grpc/http 层使用的结构体(Request/Response), 对外应是开放的
+2. 不经过内部业务加工, 描述项目元数据的结构体和接口, 或业务基础数据结构和接口.
+  * 如数据表. 典型场景是数据统计. 假设有专门统计数据的项目, 如果没有开放数据表, 那么会给第三方项目统计数据造成困难.
+3. 不开放的结构体/接口举例
+  * dto/service 不开放. dto/service 是项目内部各服务流转的结构体和服务, 无需开放.
+  * 业务具体实现 不开放.
+
+所以, 之前说的分层, 现在应有变化
+
+[source;go]
+----
+// daos/demo.go
+// Demo 即 DemoDao. 对外开放, 与数据库表结构对应
+type Demo struct{
+  Status Status
+}
+// 由于grpc自身限制, pb只能使用pb生成的Status. 实际上应该是 pb 使用 dao 的枚举值.
+// 单独定义出来是为了避免之后可能出现 pb.Status 发生与 dao 层定义值有分别的情况.
+// 当产生区别时, 随即拆分, 将 pb.Status 的值复制过来, 新的全部采用本层定义的值.
+type Status pb.Status
+
+// internal/dtos/demo.go
+// Demo 即 DemoDto, 项目内部数据库流转使用, 在 service 层将 dao 转化为 dto.
+// 情况一, 无特殊需求, 直接使用 DemoDao 即可
+// type Demo daos.Demo
+// 情况二, 某些字段需要转义. 如数据库不支持 数组/json, Dto 做一层转义
+type Demo struct{
+  daos.Demo
+  JsonTmp map[string]interface{}
+}
+
+// pb/Demo.pb.go
+// 暴露的服务. 在 controller 转化 dto 为 vo.
+rpc DemoService{
+}
+// Demo 即 DemoVO 暴露的数据结构.
+message Demo{
+}
+
+// views/demo.go
+// Demo 即 DemoVO, 主要定义Requset/Response
+// 视情况看是否要与 pb 相同.
+type Demo struct{
+}
+----
