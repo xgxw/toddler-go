@@ -13,3 +13,8 @@
 
 整体上, 项目是基于 微服务 风格的, 主张持续交付, 微服务化.
 
+
+## TODO
+1. 更改项目结构, 只对外开放rpc/http等服务, db层基础结构, 中间 ctrl/svc 逻辑对外隐藏.
+  1. 新建docs, 放于项目最外层.
+  2. service结构体+interface迁移到 internal 中.
