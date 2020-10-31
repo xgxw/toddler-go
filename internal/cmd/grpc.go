@@ -53,6 +53,7 @@ var grpcCmd = &cobra.Command{
 				grpc_validator.UnaryServerInterceptor(),
 			),
 		)
+		// 不同的service分别依次注册
 		pb.RegisterDemoServiceServer(gs, demoCtl)
 
 		quit := make(chan os.Signal, 1)

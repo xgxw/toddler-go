@@ -67,6 +67,7 @@ func TestUtilTestServiceCreate(t *testing.T) {
 		defer teardown()
 		svc := svcs.svc
 		name := "name"
+		mock.ExpectBegin()
 		sql := "^INSERT INTO `util_test_structs` \\(`name`,`created_at`,`updated_at`,`deleted_at`\\) " +
 			"VALUES \\(\\?,\\?,\\?,\\?\\)"
 		// sqlmock 的顺序必须与调用顺序相同, 否则会报错.
@@ -74,6 +75,7 @@ func TestUtilTestServiceCreate(t *testing.T) {
 		mock.ExpectExec(sql).
 			WithArgs(name, sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnResult(sqlmock.NewResult(2, 1))
+		mock.ExpectCommit()
 
 		demo, err := svc.Create(name)
 		t.Logf("create demo: %+v", demo)

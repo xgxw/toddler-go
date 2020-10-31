@@ -9,6 +9,10 @@ service DemoService{
   rpc DoSomething(Request) returns (Response);
 };
 
+// 不同Service分开定义
+service ExampleService{
+};
+
 message Request{
   uint64 id = 1 [(validator.field) = {int_gt: 0, human_error: "id required"}];
   string name = 2 [(validator.field) = {string_not_empty:true}];

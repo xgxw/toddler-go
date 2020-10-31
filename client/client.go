@@ -4,7 +4,6 @@ import (
 	"context"
 	"time"
 
-	"github.com/xgxw/toddler-go/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 )
@@ -55,19 +54,17 @@ func (opts *Options) buildDialOptions() []grpc.DialOption {
 	}
 }
 
-type DemoClient interface {
-	pb.DemoServiceClient
+// IClient Client interface
+type IClient interface {
 	Close() error
 }
 
-// Client RiskCtl gRPC 客户端结构。
+// Client Base grpc client
 type Client struct {
-	pb.DemoServiceClient
-
 	conn *grpc.ClientConn
 }
 
-// NewClient 创建一个连接 RiskCtl 的 gRPC 客户端。
+// NewClient NewClient
 func NewClient(opts Options) (*Client, error) {
 	opts.loadDefaults()
 
@@ -80,7 +77,6 @@ func NewClient(opts Options) (*Client, error) {
 	}
 
 	return &Client{
-		pb.NewDemoServiceClient(conn),
 		conn,
 	}, nil
 }
